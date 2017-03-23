@@ -48,7 +48,7 @@ ino_t getinum(char* str){
 }
 
 
-char* get_cur_filename(ino_t ino,char* str){
+char* getfilename(ino_t ino,char* str){
     DIR* fp = opendir(str);
     //char s[512];
     //s[0]='\0';
@@ -58,28 +58,30 @@ char* get_cur_filename(ino_t ino,char* str){
             return dir->d_name;
 }
 
+/*
 void printdir1(){
     while(getinum(".") != getinum("..")){
         ino_t c = getinum(".");
-        char* str = get_cur_filename(c,"..");
+        char* str = getfilename(c,"..");
         printf("/%s",str );
         chdir("..");
     }
     printf("\n");
-}
+}*/
 
-void printdir(char* s){
-    if(getinum(".") != getinum(".."))
-        printdir("..");
-    ino_t w = getinum(".");
-    char* str = get_cur_filename(w,".");
-    printf("%s/\n",str );
+void printdir(ino_t n){
+    if(n!=getinum("..")){
+        chdir("..");
+        char *str = getfilename(n,".");
+        ino_t w = getinum(".");
+        printdir(w);
+        printf("/%s", str);
+    }
 }
 
 
 main(){
-    //ino_t w = getinum(".");
-    //char* str = get_cur_filename(w,"..");
-    //printf("%s\n",str );
-    printdir(".");
+
+    printdir(getinum("."));
+    printf("\n");
 }
