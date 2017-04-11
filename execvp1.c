@@ -8,13 +8,24 @@
 #define NUMARG 20
 
 void myexec(char* argv[]){
-	printf("hahahaha\n");
-	int i;
-	//for(i=0;i<3l;i++){
-	//	printf("%s\n",argv[i]);
-	//}
-	int c = execvp(argv[0],argv);
-	printf("%d\n",c);
+	
+	
+	int pid = fork();;
+
+	switch(pid){
+		case -1:
+			printf("Error\n");
+			break;
+		case  0:
+			execvp(argv[0],argv);
+			exit(1);
+			break;
+		default:
+			wait(NULL);		
+			break;
+	}
+
+
 }
 
 
@@ -44,32 +55,3 @@ void main(){
 }
 
 
-
-
-/*
-
-
-
-void main(){
-	int counter = 0;
-	char *buf;
-	char *pstr[];
-	while(1){
-		fgets(buf,STRLEN,stdio);
-		char *cp = malloc(STRLEN);
-		strpcy(cp,buf);
-		pstr[counter] = 
-	}
-}*/
-
-/*
-void main(){
-
-	int len = 20;
-	char* cp = malloc(len+1);
-	
-	fgets(cp,len,stdin);
-	
-	printf("%s\n",cp);
-
-}*/
