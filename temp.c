@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 void main(){
-	char*argv[] = {"ls","-l",NULL};
-	execvp(argv[0],argv);
+	char str[100];
+	gethostname(str,100);
+	printf("%s\n",str);
 }
