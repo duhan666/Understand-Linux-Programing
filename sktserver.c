@@ -5,7 +5,7 @@
         #include <sys/socket.h>
 	    #include <stdio.h>
 		#include <stdlib.h>
-		//#include <netinet/in.h>
+		#include <netinet/in.h>
 		#include <netdb.h>
 		#include <unistd.h>
 		#include <string.h>
@@ -25,8 +25,8 @@ int main(){
 	memset(&myipv4sock,0,sizeof(struct sockaddr_in));
 
 	myipv4sock.sin_family = AF_INET;
-	myipv4sock.sin_port   = 13157;
-	myipv4sock.sin_addr.s_addr = inet_addr("192.168.1.116");
+	myipv4sock.sin_port   = htons(13157);
+	myipv4sock.sin_addr.s_addr = inet_addr("192.168.1.120");
 
 
 	int skt_id = socket(AF_INET,SOCK_STREAM,0);
@@ -45,12 +45,14 @@ int main(){
 		if(accp_id == -1)printf("accept error!\n");
 		printf("Wow,get a call!\n");
 
-		FILE* sock_fp = fdopen(skt_id,"w");
+		FILE* sock_fp = fdopen(accp_id,"w");
 
 		time_t thetime = time(NULL);
 		char* str = ctime(&thetime);
+		
+		printf("begin to print time&date\n");
 
-		fprintf(sock_fp,"the time here is...\n");
+		fprintf(sock_fp,"the time here is...");
 		fprintf(sock_fp,"%s",str);
 
 		fclose(sock_fp);
