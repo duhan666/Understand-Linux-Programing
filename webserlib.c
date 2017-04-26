@@ -96,6 +96,14 @@ int create_connect(int portnum){
 	return sktid;
 }
 
+char* timeofnow(){
+	time_t o_time ;
+	time(&o_time);
+	char *manreadtime;
+	manreadtime = ctime(&o_time);
+	//printf("%s\n", manreadtime);
+	return manreadtime;
+}
 
 /*
 void main(){
